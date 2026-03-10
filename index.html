@@ -1,1316 +1,417 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MV Cordas — Distribuição Direto da Indústria</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
-    <style>
-        :root {
-            --orange: #E85D04;
-            --orange-2: #F48C06;
-            --orange-light: #FFF3E8;
-            --white: #FFFFFF;
-            --gray-50: #F9F7F5;
-            --gray-100: #F0EDE9;
-            --gray-200: #DDD8D0;
-            --gray-400: #9E9589;
-            --gray-600: #5C5650;
-            --gray-900: #1A1714;
-            --r-sm: 16px;
-            --r-md: 24px;
-            --r-lg: 32px;
-            --r-xl: 40px;
-        }
-
-        *,
-        *::before,
-        *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Nunito', sans-serif;
-            background: var(--white);
-            color: var(--gray-900);
-            overflow-x: hidden;
-        }
-
-        /* NAV */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 100;
-            background: rgba(255, 255, 255, 0.93);
-            backdrop-filter: blur(16px);
-            border-bottom: 1px solid var(--gray-100);
-            padding: 0 64px;
-            height: 72px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .nav-logo {
-            font-family: 'Nunito', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 900;
-            color: var(--gray-900);
-            text-decoration: none;
-            letter-spacing: -0.01em;
-        }
-
-        .nav-logo span {
-            color: var(--orange);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 36px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--gray-600);
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-            transition: color 0.25s;
-        }
-
-        .nav-links a:hover {
-            color: var(--orange);
-        }
-
-        .nav-cta {
-            background: var(--orange) !important;
-            color: var(--white) !important;
-            padding: 10px 24px;
-            border-radius: 100px !important;
-            font-weight: 700 !important;
-            box-shadow: 0 4px 16px rgba(232, 93, 4, 0.28);
-            transition: background 0.25s, transform 0.25s !important;
-        }
-
-        .nav-cta:hover {
-            background: #C94D02 !important;
-            transform: translateY(-1px);
-        }
-
-        /* HERO */
-        .hero {
-            min-height: 100vh;
-            padding: 120px 64px 80px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            align-items: center;
-            gap: 60px;
-            position: relative;
-            overflow: hidden;
-            background: var(--white);
-        }
-
-        .hero::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: -80px;
-            width: 52%;
-            height: 100%;
-            background: linear-gradient(160deg, var(--orange-light) 0%, #FFF8F0 100%);
-            clip-path: polygon(12% 0, 100% 0, 100% 100%, 0% 100%);
-            z-index: 0;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero-eyebrow {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--orange-light);
-            border: 1.5px solid rgba(232, 93, 4, 0.2);
-            padding: 8px 20px;
-            border-radius: 100px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--orange);
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            margin-bottom: 28px;
-        }
-
-        .hero-eyebrow::before {
-            content: '';
-            width: 7px;
-            height: 7px;
-            background: var(--orange);
-            border-radius: 50%;
-            animation: blink 2s infinite;
-        }
-
-        @keyframes blink {
-
-            0%,
-            100% {
-                opacity: 1
-            }
-
-            50% {
-                opacity: 0.25
-            }
-        }
-
-        .hero h1 {
-            font-family: 'Nunito', sans-serif;
-            font-size: clamp(2.8rem, 4.5vw, 5rem);
-            font-weight: 900;
-            line-height: 1.05;
-            letter-spacing: -0.02em;
-            color: var(--gray-900);
-            margin-bottom: 24px;
-        }
-
-        .hero h1 strong {
-            color: var(--orange);
-            font-weight: 900;
-            display: block;
-        }
-
-        .hero-sub {
-            font-size: 1.05rem;
-            font-weight: 400;
-            color: var(--gray-600);
-            line-height: 1.75;
-            max-width: 480px;
-            margin-bottom: 44px;
-        }
-
-        .hero-actions {
-            display: flex;
-            gap: 14px;
-            flex-wrap: wrap;
-        }
-
-        .btn-primary {
-            background: var(--orange);
-            color: var(--white);
-            padding: 15px 34px;
-            border-radius: 100px;
-            font-family: 'Nunito', sans-serif;
-            font-size: 0.95rem;
-            font-weight: 700;
-            text-decoration: none;
-            display: inline-block;
-            box-shadow: 0 6px 24px rgba(232, 93, 4, 0.32);
-            transition: all 0.28s;
-        }
-
-        .btn-primary:hover {
-            background: #C94D02;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 32px rgba(232, 93, 4, 0.4);
-        }
-
-        .btn-ghost {
-            background: transparent;
-            color: var(--gray-900);
-            padding: 15px 34px;
-            border-radius: 100px;
-            border: 2px solid var(--gray-200);
-            font-family: 'Nunito', sans-serif;
-            font-size: 0.95rem;
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.28s;
-        }
-
-        .btn-ghost:hover {
-            border-color: var(--orange);
-            color: var(--orange);
-        }
-
-        /* HERO CARDS */
-        .hero-visual {
-            position: relative;
-            z-index: 2;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-
-        .hcard {
-            background: var(--white);
-            border-radius: var(--r-xl);
-            padding: 28px 22px;
-            border: 2px solid var(--gray-100);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-            transition: all 0.35s;
-            text-align: center;
-        }
-
-        .hcard:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 36px rgba(232, 93, 4, 0.14);
-            border-color: rgba(232, 93, 4, 0.3);
-        }
-
-        .hcard:nth-child(1) {
-            margin-top: 24px;
-        }
-
-        .hcard:nth-child(4) {
-            margin-top: -24px;
-        }
-
-        .hcard-icon {
-            font-size: 2.2rem;
-            margin-bottom: 12px;
-            display: block;
-        }
-
-        .hcard-name {
-            font-family: 'Nunito', sans-serif;
-            font-size: 0.95rem;
-            font-weight: 800;
-            color: var(--gray-900);
-            margin-bottom: 4px;
-        }
-
-        .hcard-tag {
-            font-size: 0.73rem;
-            color: var(--orange);
-            font-weight: 600;
-        }
-
-        /* TICKER */
-        .ticker-wrap {
-            background: var(--orange);
-            padding: 16px 0;
-            overflow: hidden;
-            white-space: nowrap;
-        }
-
-        .ticker-inner {
-            display: inline-flex;
-            animation: ticker 22s linear infinite;
-        }
-
-        @keyframes ticker {
-            from {
-                transform: translateX(0)
-            }
-
-            to {
-                transform: translateX(-50%)
-            }
-        }
-
-        .ticker-item {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            padding: 0 36px;
-            font-family: 'Nunito', sans-serif;
-            font-size: 0.82rem;
-            font-weight: 800;
-            color: rgba(255, 255, 255, 0.9);
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-        }
-
-        .ticker-sep {
-            color: rgba(255, 255, 255, 0.4);
-        }
-
-        /* STATS */
-        .stats {
-            background: var(--gray-50);
-            border-bottom: 1px solid var(--gray-100);
-            padding: 56px 64px;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-        }
-
-        .stat-cell {
-            padding: 24px 32px;
-            border-right: 1px solid var(--gray-200);
-            text-align: center;
-        }
-
-        .stat-cell:last-child {
-            border-right: none;
-        }
-
-        .stat-num {
-            font-family: 'Nunito', sans-serif;
-            font-size: 2.6rem;
-            font-weight: 900;
-            color: var(--orange);
-            line-height: 1;
-            margin-bottom: 6px;
-        }
-
-        .stat-lbl {
-            font-size: 0.78rem;
-            font-weight: 600;
-            color: var(--gray-400);
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-        }
-
-        /* SECTIONS */
-        section {
-            padding: 96px 64px;
-        }
-
-        .tag {
-            font-size: 0.75rem;
-            font-weight: 800;
-            color: var(--orange);
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        .sec-title {
-            font-family: 'Nunito', sans-serif;
-            font-size: clamp(1.9rem, 3vw, 2.8rem);
-            font-weight: 900;
-            line-height: 1.1;
-            letter-spacing: -0.01em;
-            color: var(--gray-900);
-            margin-bottom: 16px;
-        }
-
-        .sec-desc {
-            font-size: 1rem;
-            font-weight: 400;
-            color: var(--gray-600);
-            line-height: 1.75;
-            max-width: 520px;
-        }
-
-        /* PRODUCTS */
-        .products {
-            background: var(--white);
-        }
-
-        .products-head {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            margin-bottom: 56px;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-            gap: 24px;
-        }
-
-        .pcard {
-            background: var(--white);
-            border: 2px solid var(--gray-100);
-            border-radius: var(--r-xl);
-            padding: 40px 32px;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.35s;
-        }
-
-        .pcard:hover {
-            border-color: var(--orange);
-            box-shadow: 0 16px 48px rgba(232, 93, 4, 0.12);
-            transform: translateY(-4px);
-        }
-
-        .pcard::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(to right, var(--orange), var(--orange-2));
-            opacity: 0;
-            transition: opacity 0.35s;
-        }
-
-        .pcard:hover::before {
-            opacity: 1;
-        }
-
-        .pcard-num {
-            font-family: 'Nunito', sans-serif;
-            font-size: 4.5rem;
-            font-weight: 900;
-            color: var(--orange-light);
-            position: absolute;
-            top: 8px;
-            right: 20px;
-            line-height: 1;
-            user-select: none;
-        }
-
-        .pcard-icon {
-            width: 56px;
-            height: 56px;
-            background: var(--orange-light);
-            border-radius: var(--r-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.6rem;
-            margin-bottom: 22px;
-        }
-
-        .pcard-name {
-            font-family: 'Nunito', sans-serif;
-            font-size: 1.3rem;
-            font-weight: 800;
-            color: var(--gray-900);
-            margin-bottom: 12px;
-        }
-
-        .pcard-desc {
-            font-size: 0.9rem;
-            font-weight: 400;
-            color: var(--gray-600);
-            line-height: 1.7;
-        }
-
-        .pcard-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-top: 20px;
-        }
-
-        .ptag {
-            background: var(--orange-light);
-            color: var(--orange);
-            padding: 5px 14px;
-            border-radius: 100px;
-            font-size: 0.73rem;
-            font-weight: 700;
-        }
-
-        .nr-badges {
-            display: flex;
-            gap: 8px;
-            margin-top: 18px;
-        }
-
-        .nr-b {
-            padding: 6px 16px;
-            border-radius: 100px;
-            font-size: 0.73rem;
-            font-weight: 800;
-            letter-spacing: 0.04em;
-        }
-
-        .nr-orange {
-            background: rgba(232, 93, 4, 0.1);
-            border: 2px solid rgba(232, 93, 4, 0.3);
-            color: var(--orange);
-        }
-
-        .nr-white {
-            background: var(--gray-50);
-            border: 2px solid var(--gray-200);
-            color: var(--gray-600);
-        }
-
-        /* WHY */
-        .why {
-            background: var(--gray-50);
-        }
-
-        .why-inner {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px;
-            align-items: center;
-        }
-
-        .why-cards {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-
-        .wcard {
-            background: var(--white);
-            border: 2px solid var(--gray-100);
-            border-radius: var(--r-lg);
-            padding: 28px 24px;
-            transition: all 0.3s;
-        }
-
-        .wcard:hover {
-            border-color: rgba(232, 93, 4, 0.3);
-            box-shadow: 0 8px 28px rgba(232, 93, 4, 0.08);
-        }
-
-        .wcard-icon {
-            font-size: 1.8rem;
-            margin-bottom: 12px;
-            display: block;
-        }
-
-        .wcard-title {
-            font-family: 'Nunito', sans-serif;
-            font-size: 0.95rem;
-            font-weight: 800;
-            color: var(--gray-900);
-            margin-bottom: 6px;
-        }
-
-        .wcard-text {
-            font-size: 0.84rem;
-            font-weight: 400;
-            color: var(--gray-600);
-            line-height: 1.6;
-        }
-
-        .why-right .sec-desc {
-            margin-bottom: 32px;
-        }
-
-        .checklist {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .checklist li {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: var(--gray-600);
-            line-height: 1.5;
-        }
-
-        .check-dot {
-            width: 22px;
-            height: 22px;
-            background: var(--orange);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            margin-top: 1px;
-        }
-
-        .check-dot svg {
-            width: 12px;
-            height: 12px;
-        }
-
-        /* CTA */
-        .cta-banner {
-            padding: 80px 64px;
-            background: linear-gradient(135deg, var(--orange) 0%, #C94D02 100%);
-            position: relative;
-            overflow: hidden;
-            border-radius: 0;
-        }
-
-        .cta-banner::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.03) 0px, rgba(255, 255, 255, 0.03) 1px, transparent 1px, transparent 24px);
-        }
-
-        .cta-inner {
-            position: relative;
-            z-index: 2;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 32px;
-        }
-
-        .cta-text h2 {
-            font-family: 'Nunito', sans-serif;
-            font-size: clamp(1.8rem, 3vw, 2.5rem);
-            font-weight: 900;
-            color: var(--white);
-            letter-spacing: -0.01em;
-            margin-bottom: 8px;
-        }
-
-        .cta-text p {
-            font-size: 1rem;
-            font-weight: 400;
-            color: rgba(255, 255, 255, 0.85);
-        }
-
-        .btn-white {
-            background: var(--white);
-            color: var(--orange);
-            padding: 16px 36px;
-            border-radius: 100px;
-            font-family: 'Nunito', sans-serif;
-            font-size: 0.95rem;
-            font-weight: 800;
-            text-decoration: none;
-            display: inline-block;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-            transition: all 0.28s;
-            white-space: nowrap;
-        }
-
-        .btn-white:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-        }
-
-        /* CONTACT */
-        .contact {
-            background: var(--white);
-        }
-
-        .contact-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 72px;
-            align-items: start;
-        }
-
-        .contact-items {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            margin-top: 40px;
-        }
-
-        .citem {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-            background: var(--gray-50);
-            border: 2px solid var(--gray-100);
-            padding: 18px 22px;
-            border-radius: var(--r-lg);
-            text-decoration: none;
-            transition: all 0.28s;
-        }
-
-        .citem:hover {
-            border-color: var(--orange);
-            background: var(--orange-light);
-            transform: translateX(6px);
-        }
-
-        .citem-icon {
-            width: 46px;
-            height: 46px;
-            flex-shrink: 0;
-            background: var(--orange-light);
-            border-radius: var(--r-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.15rem;
-            border: 2px solid rgba(232, 93, 4, 0.15);
-        }
-
-        .citem-lbl {
-            font-size: 0.7rem;
-            font-weight: 700;
-            color: var(--orange);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 2px;
-        }
-
-        .citem-val {
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: var(--gray-900);
-        }
-
-        .map-card {
-            border-radius: var(--r-xl);
-            overflow: hidden;
-            border: 2px solid var(--gray-100);
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
-        }
-
-        .map-card iframe {
-            width: 100%;
-            height: 300px;
-            border: none;
-            display: block;
-        }
-
-        .addr-box {
-            padding: 22px 24px;
-            background: var(--gray-50);
-            border-top: 2px solid var(--gray-100);
-        }
-
-        .addr-lbl {
-            font-size: 0.72rem;
-            font-weight: 800;
-            color: var(--orange);
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            margin-bottom: 6px;
-        }
-
-        .addr-txt {
-            font-size: 0.88rem;
-            font-weight: 400;
-            color: var(--gray-600);
-            line-height: 1.65;
-        }
-
-        /* FOOTER */
-        footer {
-            background: var(--gray-900);
-            padding: 48px 64px 36px;
-        }
-
-        .footer-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            flex-wrap: wrap;
-            gap: 32px;
-            padding-bottom: 36px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            margin-bottom: 28px;
-        }
-
-        .footer-logo {
-            font-family: 'Nunito', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 900;
-            color: var(--white);
-        }
-
-        .footer-logo span {
-            color: var(--orange);
-        }
-
-        .footer-desc {
-            font-size: 0.84rem;
-            font-weight: 400;
-            color: rgba(255, 255, 255, 0.45);
-            margin-top: 8px;
-            max-width: 260px;
-            line-height: 1.6;
-        }
-
-        .footer-col-title {
-            font-size: 0.72rem;
-            font-weight: 800;
-            color: rgba(255, 255, 255, 0.35);
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            margin-bottom: 14px;
-        }
-
-        .footer-links {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .footer-links a {
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: rgba(255, 255, 255, 0.5);
-            transition: color 0.25s;
-        }
-
-        .footer-links a:hover {
-            color: var(--orange);
-        }
-
-        .footer-social {
-            display: flex;
-            gap: 12px;
-        }
-
-        .fsoc {
-            width: 40px;
-            height: 40px;
-            border: 2px solid rgba(255, 255, 255, 0.12);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            font-size: 0.95rem;
-            color: rgba(255, 255, 255, 0.5);
-            transition: all 0.28s;
-        }
-
-        .fsoc:hover {
-            border-color: var(--orange);
-            background: rgba(232, 93, 4, 0.15);
-            color: var(--orange);
-        }
-
-        .footer-bottom {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 12px;
-            font-size: 0.76rem;
-            font-weight: 500;
-            color: rgba(255, 255, 255, 0.3);
-        }
-
-        /* FLOAT */
-        .wa-float {
-            position: fixed;
-            bottom: 28px;
-            right: 28px;
-            z-index: 300;
-            width: 62px;
-            height: 62px;
-            background: #25D366;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            box-shadow: 0 6px 28px rgba(37, 211, 102, 0.45), 0 2px 8px rgba(0, 0, 0, 0.12);
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            animation: popIn 0.8s ease 1.2s both;
-            border: 3px solid rgba(255, 255, 255, 0.35);
-        }
-
-        .wa-float:hover {
-            transform: scale(1.12) translateY(-2px);
-            box-shadow: 0 14px 40px rgba(37, 211, 102, 0.55), 0 4px 12px rgba(0, 0, 0, 0.15);
-            border-color: rgba(255, 255, 255, 0.6);
-        }
-
-        .wa-float svg {
-            display: block;
-        }
-
-        @keyframes popIn {
-            from {
-                opacity: 0;
-                transform: scale(0.4)
-            }
-
-            to {
-                opacity: 1;
-                transform: scale(1)
-            }
-        }
-
-        /* REVEAL */
-        .reveal {
-            opacity: 0;
-            transform: translateY(28px);
-            transition: opacity 0.65s ease, transform 0.65s ease;
-        }
-
-        .reveal.on {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* RESPONSIVE */
-        @media(max-width:940px) {
-            nav {
-                padding: 0 24px;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .hero {
-                grid-template-columns: 1fr;
-                padding: 100px 24px 60px;
-            }
-
-            .hero::after {
-                display: none;
-            }
-
-            .hero-visual {
-                display: none;
-            }
-
-            .stats {
-                grid-template-columns: 1fr 1fr;
-                padding: 40px 24px;
-            }
-
-            section {
-                padding: 64px 24px;
-            }
-
-            .products-head {
-                flex-direction: column;
-            }
-
-            .why-inner {
-                grid-template-columns: 1fr;
-                gap: 48px;
-            }
-
-            .contact-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .cta-inner {
-                flex-direction: column;
-            }
-
-            footer {
-                padding: 40px 24px 28px;
-            }
-
-            .footer-top {
-                flex-direction: column;
-            }
-
-            .footer-bottom {
-                flex-direction: column;
-                text-align: center;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MV Cordas — Distribuição Direto da Indústria</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange:       #E85D04;
+    --orange-2:     #F48C06;
+    --orange-light: #FFF3E8;
+    --white:        #FFFFFF;
+    --gray-50:      #F9F7F5;
+    --gray-100:     #F0EDE9;
+    --gray-200:     #DDD8D0;
+    --gray-400:     #9E9589;
+    --gray-600:     #5C5650;
+    --gray-900:     #1A1714;
+    --r-sm:  16px;
+    --r-md:  24px;
+    --r-lg:  32px;
+    --r-xl:  40px;
+  }
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { font-family:'Nunito',sans-serif; background:var(--white); color:var(--gray-900); overflow-x:hidden; }
+
+  /* NAV */
+  nav {
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(255,255,255,0.93);
+    backdrop-filter:blur(16px);
+    border-bottom:1px solid var(--gray-100);
+    padding:0 64px; height:72px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .nav-logo { font-family:'Nunito',sans-serif; font-size:1.5rem; font-weight:900; color:var(--gray-900); text-decoration:none; letter-spacing:-0.01em; }
+  .nav-logo span { color:var(--orange); }
+  .nav-links { display:flex; gap:36px; list-style:none; }
+  .nav-links a { text-decoration:none; font-size:0.85rem; font-weight:600; color:var(--gray-600); letter-spacing:0.04em; text-transform:uppercase; transition:color 0.25s; }
+  .nav-links a:hover { color:var(--orange); }
+  .nav-cta { background:var(--orange) !important; color:var(--white) !important; padding:10px 24px; border-radius:100px !important; font-weight:700 !important; box-shadow:0 4px 16px rgba(232,93,4,0.28); transition:background 0.25s, transform 0.25s !important; }
+  .nav-cta:hover { background:#C94D02 !important; transform:translateY(-1px); }
+
+  /* HERO */
+  .hero {
+    min-height:100vh; padding:120px 64px 80px;
+    display:grid; grid-template-columns:1fr 1fr; align-items:center; gap:60px;
+    position:relative; overflow:hidden; background:var(--white);
+  }
+  .hero::after {
+    content:''; position:absolute; top:0; right:-80px; width:52%; height:100%;
+    background:linear-gradient(160deg, var(--orange-light) 0%, #FFF8F0 100%);
+    clip-path:polygon(12% 0, 100% 0, 100% 100%, 0% 100%); z-index:0;
+  }
+  .hero-content { position:relative; z-index:2; }
+  .hero-eyebrow {
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--orange-light); border:1.5px solid rgba(232,93,4,0.2);
+    padding:8px 20px; border-radius:100px;
+    font-size:0.75rem; font-weight:700; color:var(--orange);
+    letter-spacing:0.1em; text-transform:uppercase; margin-bottom:28px;
+  }
+  .hero-eyebrow::before { content:''; width:7px; height:7px; background:var(--orange); border-radius:50%; animation:blink 2s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.25} }
+  .hero h1 { font-family:'Nunito',sans-serif; font-size:clamp(2.8rem,4.5vw,5rem); font-weight:900; line-height:1.05; letter-spacing:-0.02em; color:var(--gray-900); margin-bottom:24px; }
+  .hero h1 strong { color:var(--orange); font-weight:900; display:block; }
+  .hero-sub { font-size:1.05rem; font-weight:400; color:var(--gray-600); line-height:1.75; max-width:480px; margin-bottom:44px; }
+  .hero-actions { display:flex; gap:14px; flex-wrap:wrap; }
+  .btn-primary { background:var(--orange); color:var(--white); padding:15px 34px; border-radius:100px; font-family:'Nunito',sans-serif; font-size:0.95rem; font-weight:700; text-decoration:none; display:inline-block; box-shadow:0 6px 24px rgba(232,93,4,0.32); transition:all 0.28s; }
+  .btn-primary:hover { background:#C94D02; transform:translateY(-2px); box-shadow:0 10px 32px rgba(232,93,4,0.4); }
+  .btn-ghost { background:transparent; color:var(--gray-900); padding:15px 34px; border-radius:100px; border:2px solid var(--gray-200); font-family:'Nunito',sans-serif; font-size:0.95rem; font-weight:600; text-decoration:none; display:inline-block; transition:all 0.28s; }
+  .btn-ghost:hover { border-color:var(--orange); color:var(--orange); }
+
+  /* HERO CARDS */
+  .hero-visual { position:relative; z-index:2; display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .hcard { background:var(--white); border-radius:var(--r-xl); padding:28px 22px; border:2px solid var(--gray-100); box-shadow:0 4px 20px rgba(0,0,0,0.06); transition:all 0.35s; text-align:center; }
+  .hcard:hover { transform:translateY(-4px); box-shadow:0 12px 36px rgba(232,93,4,0.14); border-color:rgba(232,93,4,0.3); }
+  .hcard:nth-child(1) { margin-top:24px; }
+  .hcard:nth-child(4) { margin-top:-24px; }
+  .hcard-icon { font-size:2.2rem; margin-bottom:12px; display:block; }
+  .hcard-name { font-family:'Nunito',sans-serif; font-size:0.95rem; font-weight:800; color:var(--gray-900); margin-bottom:4px; }
+  .hcard-tag { font-size:0.73rem; color:var(--orange); font-weight:600; }
+
+  /* TICKER */
+  .ticker-wrap { background:var(--orange); padding:16px 0; overflow:hidden; white-space:nowrap; }
+  .ticker-inner { display:inline-flex; animation:ticker 22s linear infinite; }
+  @keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+  .ticker-item { display:inline-flex; align-items:center; gap:12px; padding:0 36px; font-family:'Nunito',sans-serif; font-size:0.82rem; font-weight:800; color:rgba(255,255,255,0.9); letter-spacing:0.1em; text-transform:uppercase; }
+  .ticker-sep { color:rgba(255,255,255,0.4); }
+
+  /* STATS */
+  .stats { background:var(--gray-50); border-bottom:1px solid var(--gray-100); padding:56px 64px; display:grid; grid-template-columns:repeat(4,1fr); }
+  .stat-cell { padding:24px 32px; border-right:1px solid var(--gray-200); text-align:center; }
+  .stat-cell:last-child { border-right:none; }
+  .stat-num { font-family:'Nunito',sans-serif; font-size:2.6rem; font-weight:900; color:var(--orange); line-height:1; margin-bottom:6px; }
+  .stat-lbl { font-size:0.78rem; font-weight:600; color:var(--gray-400); text-transform:uppercase; letter-spacing:0.08em; }
+
+  /* SECTIONS */
+  section { padding:96px 64px; }
+  .tag { font-size:0.75rem; font-weight:800; color:var(--orange); letter-spacing:0.15em; text-transform:uppercase; display:block; margin-bottom:10px; }
+  .sec-title { font-family:'Nunito',sans-serif; font-size:clamp(1.9rem,3vw,2.8rem); font-weight:900; line-height:1.1; letter-spacing:-0.01em; color:var(--gray-900); margin-bottom:16px; }
+  .sec-desc { font-size:1rem; font-weight:400; color:var(--gray-600); line-height:1.75; max-width:520px; }
+
+  /* PRODUCTS */
+  .products { background:var(--white); }
+  .products-head { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:56px; flex-wrap:wrap; gap:20px; }
+  .products-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:24px; }
+  .pcard { background:var(--white); border:2px solid var(--gray-100); border-radius:var(--r-xl); padding:40px 32px; position:relative; overflow:hidden; transition:all 0.35s; }
+  .pcard:hover { border-color:var(--orange); box-shadow:0 16px 48px rgba(232,93,4,0.12); transform:translateY(-4px); }
+  .pcard::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; background:linear-gradient(to right, var(--orange), var(--orange-2)); opacity:0; transition:opacity 0.35s; }
+  .pcard:hover::before { opacity:1; }
+  .pcard-num { font-family:'Nunito',sans-serif; font-size:4.5rem; font-weight:900; color:var(--orange-light); position:absolute; top:8px; right:20px; line-height:1; user-select:none; }
+  .pcard-icon { width:56px; height:56px; background:var(--orange-light); border-radius:var(--r-md); display:flex; align-items:center; justify-content:center; font-size:1.6rem; margin-bottom:22px; }
+  .pcard-name { font-family:'Nunito',sans-serif; font-size:1.3rem; font-weight:800; color:var(--gray-900); margin-bottom:12px; }
+  .pcard-desc { font-size:0.9rem; font-weight:400; color:var(--gray-600); line-height:1.7; }
+  .pcard-tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:20px; }
+  .ptag { background:var(--orange-light); color:var(--orange); padding:5px 14px; border-radius:100px; font-size:0.73rem; font-weight:700; }
+  .nr-badges { display:flex; gap:8px; margin-top:18px; }
+  .nr-b { padding:6px 16px; border-radius:100px; font-size:0.73rem; font-weight:800; letter-spacing:0.04em; }
+  .nr-orange { background:rgba(232,93,4,0.1); border:2px solid rgba(232,93,4,0.3); color:var(--orange); }
+  .nr-white  { background:var(--gray-50); border:2px solid var(--gray-200); color:var(--gray-600); }
+
+  /* WHY */
+  .why { background:var(--gray-50); }
+  .why-inner { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+  .why-cards { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .wcard { background:var(--white); border:2px solid var(--gray-100); border-radius:var(--r-lg); padding:28px 24px; transition:all 0.3s; }
+  .wcard:hover { border-color:rgba(232,93,4,0.3); box-shadow:0 8px 28px rgba(232,93,4,0.08); }
+  .wcard-icon { font-size:1.8rem; margin-bottom:12px; display:block; }
+  .wcard-title { font-family:'Nunito',sans-serif; font-size:0.95rem; font-weight:800; color:var(--gray-900); margin-bottom:6px; }
+  .wcard-text { font-size:0.84rem; font-weight:400; color:var(--gray-600); line-height:1.6; }
+  .why-right .sec-desc { margin-bottom:32px; }
+  .checklist { list-style:none; display:flex; flex-direction:column; gap:12px; }
+  .checklist li { display:flex; align-items:flex-start; gap:12px; font-size:0.9rem; font-weight:500; color:var(--gray-600); line-height:1.5; }
+  .check-dot { width:22px; height:22px; background:var(--orange); border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px; }
+  .check-dot svg { width:12px; height:12px; }
+
+  /* CTA */
+  .cta-banner { padding:80px 64px; background:linear-gradient(135deg, var(--orange) 0%, #C94D02 100%); position:relative; overflow:hidden; border-radius:0; }
+  .cta-banner::before { content:''; position:absolute; inset:0; background:repeating-linear-gradient(-45deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 24px); }
+  .cta-inner { position:relative; z-index:2; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:32px; }
+  .cta-text h2 { font-family:'Nunito',sans-serif; font-size:clamp(1.8rem,3vw,2.5rem); font-weight:900; color:var(--white); letter-spacing:-0.01em; margin-bottom:8px; }
+  .cta-text p { font-size:1rem; font-weight:400; color:rgba(255,255,255,0.85); }
+  .btn-white { background:var(--white); color:var(--orange); padding:16px 36px; border-radius:100px; font-family:'Nunito',sans-serif; font-size:0.95rem; font-weight:800; text-decoration:none; display:inline-block; box-shadow:0 4px 20px rgba(0,0,0,0.15); transition:all 0.28s; white-space:nowrap; }
+  .btn-white:hover { transform:translateY(-2px); box-shadow:0 8px 32px rgba(0,0,0,0.2); }
+
+  /* CONTACT */
+  .contact { background:var(--white); }
+  .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:72px; align-items:start; }
+  .contact-items { display:flex; flex-direction:column; gap:14px; margin-top:40px; }
+  .citem { display:flex; align-items:center; gap:18px; background:var(--gray-50); border:2px solid var(--gray-100); padding:18px 22px; border-radius:var(--r-lg); text-decoration:none; transition:all 0.28s; }
+  .citem:hover { border-color:var(--orange); background:var(--orange-light); transform:translateX(6px); }
+  .citem-icon { width:46px; height:46px; flex-shrink:0; background:var(--orange-light); border-radius:var(--r-md); display:flex; align-items:center; justify-content:center; font-size:1.15rem; border:2px solid rgba(232,93,4,0.15); }
+  .citem-lbl { font-size:0.7rem; font-weight:700; color:var(--orange); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:2px; }
+  .citem-val { font-size:0.95rem; font-weight:700; color:var(--gray-900); }
+  .map-card { border-radius:var(--r-xl); overflow:hidden; border:2px solid var(--gray-100); box-shadow:0 4px 24px rgba(0,0,0,0.07); }
+  .map-card iframe { width:100%; height:300px; border:none; display:block; }
+  .addr-box { padding:22px 24px; background:var(--gray-50); border-top:2px solid var(--gray-100); }
+  .addr-lbl { font-size:0.72rem; font-weight:800; color:var(--orange); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:6px; }
+  .addr-txt { font-size:0.88rem; font-weight:400; color:var(--gray-600); line-height:1.65; }
+
+  /* FOOTER */
+  footer { background:var(--gray-900); padding:48px 64px 36px; }
+  .footer-top { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:32px; padding-bottom:36px; border-bottom:1px solid rgba(255,255,255,0.08); margin-bottom:28px; }
+  .footer-logo { font-family:'Nunito',sans-serif; font-size:1.5rem; font-weight:900; color:var(--white); }
+  .footer-logo span { color:var(--orange); }
+  .footer-desc { font-size:0.84rem; font-weight:400; color:rgba(255,255,255,0.45); margin-top:8px; max-width:260px; line-height:1.6; }
+  .footer-col-title { font-size:0.72rem; font-weight:800; color:rgba(255,255,255,0.35); letter-spacing:0.12em; text-transform:uppercase; margin-bottom:14px; }
+  .footer-links { display:flex; flex-direction:column; gap:10px; }
+  .footer-links a { text-decoration:none; font-size:0.85rem; font-weight:500; color:rgba(255,255,255,0.5); transition:color 0.25s; }
+  .footer-links a:hover { color:var(--orange); }
+  .footer-social { display:flex; gap:12px; }
+  .fsoc { width:40px; height:40px; border:2px solid rgba(255,255,255,0.12); border-radius:50%; display:flex; align-items:center; justify-content:center; text-decoration:none; font-size:0.95rem; color:rgba(255,255,255,0.5); transition:all 0.28s; }
+  .fsoc:hover { border-color:var(--orange); background:rgba(232,93,4,0.15); color:var(--orange); }
+  .footer-bottom { display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; font-size:0.76rem; font-weight:500; color:rgba(255,255,255,0.3); }
+
+  /* FLOAT */
+  .wa-float { position:fixed; bottom:28px; right:28px; z-index:300; width:62px; height:62px; background:#25D366; border-radius:50%; display:flex; align-items:center; justify-content:center; text-decoration:none; box-shadow:0 6px 28px rgba(37,211,102,0.45), 0 2px 8px rgba(0,0,0,0.12); transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1); animation:popIn 0.8s ease 1.2s both; border:3px solid rgba(255,255,255,0.35); }
+  .wa-float:hover { transform:scale(1.12) translateY(-2px); box-shadow:0 14px 40px rgba(37,211,102,0.55), 0 4px 12px rgba(0,0,0,0.15); border-color:rgba(255,255,255,0.6); }
+  .wa-float svg { display:block; }
+  @keyframes popIn { from{opacity:0;transform:scale(0.4)} to{opacity:1;transform:scale(1)} }
+
+  /* REVEAL */
+  .reveal { opacity:0; transform:translateY(28px); transition:opacity 0.65s ease, transform 0.65s ease; }
+  .reveal.on { opacity:1; transform:translateY(0); }
+
+  /* RESPONSIVE */
+  @media(max-width:940px){
+    nav{padding:0 24px;} .nav-links{display:none;}
+    .hero{grid-template-columns:1fr; padding:100px 24px 60px;} .hero::after{display:none;} .hero-visual{display:none;}
+    .stats{grid-template-columns:1fr 1fr; padding:40px 24px;}
+    section{padding:64px 24px;}
+    .products-head{flex-direction:column;}
+    .why-inner{grid-template-columns:1fr; gap:48px;}
+    .contact-grid{grid-template-columns:1fr;}
+    .cta-inner{flex-direction:column;}
+    footer{padding:40px 24px 28px;} .footer-top{flex-direction:column;} .footer-bottom{flex-direction:column;text-align:center;}
+  }
+</style>
 </head>
-
 <body>
 
-    <nav>
-        <a href="#" class="nav-logo">MV <span>Cordas</span></a>
-        <ul class="nav-links">
-            <li><a href="#produtos">Produtos</a></li>
-            <li><a href="#diferenciais">Diferenciais</a></li>
-            <li><a href="#contato">Contato</a></li>
-            <li><a href="https://wa.me/5562996343548" target="_blank" class="nav-cta">Pedir Orçamento</a></li>
-        </ul>
-    </nav>
+<nav>
+  <a href="#" class="site-logo" rel="home">
+    <img src="https://i.ibb.co/F40S382B/logo-removebg-preview.png" alt="MV Cordas" style="height:48px;width:auto;">
+  </a>
+  <ul class="nav-links">
+    <li><a href="#produtos">Produtos</a></li>
+    <li><a href="#diferenciais">Diferenciais</a></li>
+    <li><a href="#contato">Contato</a></li>
+    <li><a href="https://wa.me/5562996343548" target="_blank" class="nav-cta">Pedir Orçamento</a></li>
+  </ul>
+</nav>
 
-    <section class="hero" id="inicio">
-        <div class="hero-content">
-            <div class="hero-eyebrow">Distribuição Industrial B2B</div>
-            <h1>A corda certa<br><strong>para seu negócio</strong></h1>
-            <p class="hero-sub">Direto da indústria para sua empresa. Atendimento rápido, portfólio completo e preços
-                que fazem diferença no seu resultado.</p>
-            <div class="hero-actions">
-                <a href="https://wa.me/5562996343548" target="_blank" class="btn-primary">💬 Falar pelo WhatsApp</a>
-                <a href="#produtos" class="btn-ghost">Ver Produtos →</a>
-            </div>
-        </div>
-        <div class="hero-visual">
-            <div class="hcard"><span class="hcard-icon">🪢</span>
-                <div class="hcard-name">Poliéster</div>
-                <div class="hcard-tag">Alta durabilidade</div>
-            </div>
-            <div class="hcard"><span class="hcard-icon">⚓</span>
-                <div class="hcard-name">Polipropileno</div>
-                <div class="hcard-tag">Leve & flutuante</div>
-            </div>
-            <div class="hcard"><span class="hcard-icon">🌿</span>
-                <div class="hcard-name">Sisal</div>
-                <div class="hcard-tag">Natural & sustentável</div>
-            </div>
-            <div class="hcard"><span class="hcard-icon">🦺</span>
-                <div class="hcard-name">NR 18</div>
-                <div class="hcard-tag">Segurança do trabalho</div>
-            </div>
-        </div>
-    </section>
-
-    <div class="ticker-wrap">
-        <div class="ticker-inner">
-            <span class="ticker-item">Poliéster <span class="ticker-sep">◆</span></span>
-            <span class="ticker-item">Polipropileno <span class="ticker-sep">◆</span></span>
-            <span class="ticker-item">Sisal Natural <span class="ticker-sep">◆</span></span>
-            <span class="ticker-item">Corda NR 18 <span class="ticker-sep">◆</span></span>
-            <span class="ticker-item">Pronta Entrega <span class="ticker-sep">◆</span></span>
-            <span class="ticker-item">Direto da Indústria <span class="ticker-sep">◆</span></span>
-            <span class="ticker-item">Aparecida de Goiânia – GO <span class="ticker-sep">◆</span></span>
-            <span class="ticker-item">Poliéster <span class="ticker-sep">◆</span></span>
-            <span class="ticker-item">Polipropileno <span class="ticker-sep">◆</span></span>
-            <span class="ticker-item">Sisal Natural <span class="ticker-sep">◆</span></span>
-            <span class="ticker-item">Corda NR 18 <span class="ticker-sep">◆</span></span>
-            <span class="ticker-item">Pronta Entrega <span class="ticker-sep">◆</span></span>
-            <span class="ticker-item">Direto da Indústria <span class="ticker-sep">◆</span></span>
-            <span class="ticker-item">Aparecida de Goiânia – GO <span class="ticker-sep">◆</span></span>
-        </div>
+<section class="hero" id="inicio">
+  <div class="hero-content">
+    <div class="hero-eyebrow">Distribuição Industrial B2B</div>
+    <h1>A corda certa<br><strong>para seu negócio</strong></h1>
+    <p class="hero-sub">Direto da indústria para sua empresa. Atendimento rápido, portfólio completo e preços que fazem diferença no seu resultado.</p>
+    <div class="hero-actions">
+      <a href="https://wa.me/5562996343548" target="_blank" class="btn-primary">💬 Falar pelo WhatsApp</a>
+      <a href="#produtos" class="btn-ghost">Ver Produtos →</a>
     </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hcard"><span class="hcard-icon">🪢</span><div class="hcard-name">Poliéster</div><div class="hcard-tag">Alta durabilidade</div></div>
+    <div class="hcard"><span class="hcard-icon">⚓</span><div class="hcard-name">Polipropileno</div><div class="hcard-tag">Leve & flutuante</div></div>
+    <div class="hcard"><span class="hcard-icon">🌿</span><div class="hcard-name">Sisal</div><div class="hcard-tag">Natural & sustentável</div></div>
+    <div class="hcard"><span class="hcard-icon">🦺</span><div class="hcard-name">NR 18</div><div class="hcard-tag">Segurança do trabalho</div></div>
+  </div>
+</section>
 
-    <div class="stats">
-        <div class="stat-cell reveal">
-            <div class="stat-num">4+</div>
-            <div class="stat-lbl">Linhas de Produto</div>
-        </div>
-        <div class="stat-cell reveal">
-            <div class="stat-num">B2B</div>
-            <div class="stat-lbl">Foco Empresarial</div>
-        </div>
-        <div class="stat-cell reveal">
-            <div class="stat-num">⚡</div>
-            <div class="stat-lbl">Entrega Rápida</div>
-        </div>
-        <div class="stat-cell reveal">
-            <div class="stat-num">GO</div>
-            <div class="stat-lbl">Aparecida de Goiânia</div>
-        </div>
+<div class="ticker-wrap">
+  <div class="ticker-inner">
+    <span class="ticker-item">Poliéster <span class="ticker-sep">◆</span></span>
+    <span class="ticker-item">Polipropileno <span class="ticker-sep">◆</span></span>
+    <span class="ticker-item">Sisal Natural <span class="ticker-sep">◆</span></span>
+    <span class="ticker-item">Corda NR 18 <span class="ticker-sep">◆</span></span>
+    <span class="ticker-item">Pronta Entrega <span class="ticker-sep">◆</span></span>
+    <span class="ticker-item">Direto da Indústria <span class="ticker-sep">◆</span></span>
+    <span class="ticker-item">Aparecida de Goiânia – GO <span class="ticker-sep">◆</span></span>
+    <span class="ticker-item">Poliéster <span class="ticker-sep">◆</span></span>
+    <span class="ticker-item">Polipropileno <span class="ticker-sep">◆</span></span>
+    <span class="ticker-item">Sisal Natural <span class="ticker-sep">◆</span></span>
+    <span class="ticker-item">Corda NR 18 <span class="ticker-sep">◆</span></span>
+    <span class="ticker-item">Pronta Entrega <span class="ticker-sep">◆</span></span>
+    <span class="ticker-item">Direto da Indústria <span class="ticker-sep">◆</span></span>
+    <span class="ticker-item">Aparecida de Goiânia – GO <span class="ticker-sep">◆</span></span>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stat-cell reveal"><div class="stat-num">4+</div><div class="stat-lbl">Linhas de Produto</div></div>
+  <div class="stat-cell reveal"><div class="stat-num">B2B</div><div class="stat-lbl">Foco Empresarial</div></div>
+  <div class="stat-cell reveal"><div class="stat-num">⚡</div><div class="stat-lbl">Entrega Rápida</div></div>
+  <div class="stat-cell reveal"><div class="stat-num">GO</div><div class="stat-lbl">Aparecida de Goiânia</div></div>
+</div>
+
+<section class="products" id="produtos">
+  <div class="products-head">
+    <div>
+      <span class="tag">Portfólio Completo</span>
+      <h2 class="sec-title">Todas as cordas<br>que você precisa</h2>
     </div>
-
-    <section class="products" id="produtos">
-        <div class="products-head">
-            <div>
-                <span class="tag">Portfólio Completo</span>
-                <h2 class="sec-title">Todas as cordas<br>que você precisa</h2>
-            </div>
-            <p class="sec-desc">Do artesanato à construção civil, temos a corda ideal para cada aplicação com qualidade
-                garantida.</p>
-        </div>
-        <div class="products-grid">
-            <div class="pcard reveal">
-                <div class="pcard-num">01</div>
-                <div class="pcard-icon">🪢</div>
-                <div class="pcard-name">Poliéster</div>
-                <p class="pcard-desc">Boa resistência e durabilidade com excelente custo-benefício. Ideal para varal,
-                    artesanato e amarrações em geral, com alta resistência à abrasão e ao desgaste.</p>
-                <div class="pcard-tags"><span class="ptag">Varal</span><span class="ptag">Artesanato</span><span
-                        class="ptag">Amarração</span></div>
-            </div>
-            <div class="pcard reveal">
-                <div class="pcard-num">02</div>
-                <div class="pcard-icon">⚓</div>
-                <div class="pcard-name">Polipropileno</div>
-                <p class="pcard-desc">Leve, resistente à umidade e flutuante — escolha perfeita para atividades náuticas
-                    e amarrações em ambientes molhados ou úmidos.</p>
-                <div class="pcard-tags"><span class="ptag">Náutico</span><span class="ptag">Flutuante</span><span
-                        class="ptag">Resistente à umidade</span></div>
-            </div>
-            <div class="pcard reveal">
-                <div class="pcard-num">03</div>
-                <div class="pcard-icon">🌿</div>
-                <div class="pcard-name">Sisal</div>
-                <p class="pcard-desc">Produzida a partir de fibras vegetais extremamente resistentes. Uma das cordas
-                    naturais mais robustas do mercado — une funcionalidade, estética e sustentabilidade.</p>
-                <div class="pcard-tags"><span class="ptag">Decoração</span><span class="ptag">Paisagismo</span><span
-                        class="ptag">Pesca</span><span class="ptag">Natural</span></div>
-            </div>
-            <div class="pcard reveal">
-                <div class="pcard-num">04</div>
-                <div class="pcard-icon">🦺</div>
-                <div class="pcard-name">Corda NR 18</div>
-                <p class="pcard-desc">Corda técnica para segurança do trabalho na construção civil, conforme normas
-                    regulamentadoras. Disponível nas cores padrão para identificação visual imediata.</p>
-                <div class="nr-badges"><span class="nr-b nr-orange">🟠 Laranja</span><span class="nr-b nr-white">⚪
-                        Branco</span></div>
-            </div>
-        </div>
-    </section>
-
-    <section class="why" id="diferenciais">
-        <div class="why-inner">
-            <div class="why-cards">
-                <div class="wcard reveal"><span class="wcard-icon">🏭</span>
-                    <div class="wcard-title">Direto da Fábrica</div>
-                    <p class="wcard-text">Sem intermediários. Compre com os melhores preços diretamente da indústria.
-                    </p>
-                </div>
-                <div class="wcard reveal"><span class="wcard-icon">⚡</span>
-                    <div class="wcard-title">Entrega Ágil</div>
-                    <p class="wcard-text">Agilidade no atendimento para que o seu negócio nunca pare por falta de
-                        material.</p>
-                </div>
-                <div class="wcard reveal"><span class="wcard-icon">💰</span>
-                    <div class="wcard-title">Preço Competitivo</div>
-                    <p class="wcard-text">Valores que fazem diferença real no resultado financeiro da sua empresa.</p>
-                </div>
-                <div class="wcard reveal"><span class="wcard-icon">📦</span>
-                    <div class="wcard-title">Estoque Completo</div>
-                    <p class="wcard-text">Todas as linhas disponíveis para pronta-entrega em Aparecida de Goiânia.</p>
-                </div>
-            </div>
-            <div class="why-right">
-                <span class="tag">Por que a MV Cordas</span>
-                <h2 class="sec-title">O parceiro que<br>seu negócio merece</h2>
-                <p class="sec-desc">Somos especialistas em distribuição de cordas para empresas que precisam de
-                    qualidade, variedade e preços justos — com o atendimento que você espera.</p>
-                <ul class="checklist">
-                    <li>
-                        <div class="check-dot"><svg viewBox="0 0 12 12" fill="none">
-                                <path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.8" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                            </svg></div>Distribuição B2B com atendimento personalizado
-                    </li>
-                    <li>
-                        <div class="check-dot"><svg viewBox="0 0 12 12" fill="none">
-                                <path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.8" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                            </svg></div>Portfólio completo: poliéster, polipropileno, sisal e NR 18
-                    </li>
-                    <li>
-                        <div class="check-dot"><svg viewBox="0 0 12 12" fill="none">
-                                <path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.8" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                            </svg></div>Localização estratégica em Aparecida de Goiânia – GO
-                    </li>
-                    <li>
-                        <div class="check-dot"><svg viewBox="0 0 12 12" fill="none">
-                                <path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.8" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                            </svg></div>Empresa registrada — CNPJ 54.152.813/0001-26
-                    </li>
-                    <li>
-                        <div class="check-dot"><svg viewBox="0 0 12 12" fill="none">
-                                <path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.8" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                            </svg></div>Atendimento direto via WhatsApp e Instagram
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <div class="cta-banner">
-        <div class="cta-inner">
-            <div class="cta-text">
-                <h2>Pronto para fazer seu pedido?</h2>
-                <p>Fale agora e receba seu orçamento em minutos.</p>
-            </div>
-            <a href="https://wa.me/5562996343548" target="_blank" class="btn-white">💬 Solicitar Orçamento no
-                WhatsApp</a>
-        </div>
+    <p class="sec-desc">Do artesanato à construção civil, temos a corda ideal para cada aplicação com qualidade garantida.</p>
+  </div>
+  <div class="products-grid">
+    <div class="pcard reveal">
+      <div class="pcard-num">01</div>
+      <div class="pcard-icon">🪢</div>
+      <div class="pcard-name">Poliéster</div>
+      <p class="pcard-desc">Boa resistência e durabilidade com excelente custo-benefício. Ideal para varal, artesanato e amarrações em geral, com alta resistência à abrasão e ao desgaste.</p>
+      <div class="pcard-tags"><span class="ptag">Varal</span><span class="ptag">Artesanato</span><span class="ptag">Amarração</span></div>
     </div>
+    <div class="pcard reveal">
+      <div class="pcard-num">02</div>
+      <div class="pcard-icon">⚓</div>
+      <div class="pcard-name">Polipropileno</div>
+      <p class="pcard-desc">Leve, resistente à umidade e flutuante — escolha perfeita para atividades náuticas e amarrações em ambientes molhados ou úmidos.</p>
+      <div class="pcard-tags"><span class="ptag">Náutico</span><span class="ptag">Flutuante</span><span class="ptag">Resistente à umidade</span></div>
+    </div>
+    <div class="pcard reveal">
+      <div class="pcard-num">03</div>
+      <div class="pcard-icon">🌿</div>
+      <div class="pcard-name">Sisal</div>
+      <p class="pcard-desc">Produzida a partir de fibras vegetais extremamente resistentes. Uma das cordas naturais mais robustas do mercado — une funcionalidade, estética e sustentabilidade.</p>
+      <div class="pcard-tags"><span class="ptag">Decoração</span><span class="ptag">Paisagismo</span><span class="ptag">Pesca</span><span class="ptag">Natural</span></div>
+    </div>
+    <div class="pcard reveal">
+      <div class="pcard-num">04</div>
+      <div class="pcard-icon">🦺</div>
+      <div class="pcard-name">Corda NR 18</div>
+      <p class="pcard-desc">Corda técnica para segurança do trabalho na construção civil, conforme normas regulamentadoras. Disponível nas cores padrão para identificação visual imediata.</p>
+      <div class="nr-badges"><span class="nr-b nr-orange">🟠 Laranja</span><span class="nr-b nr-white">⚪ Branco</span></div>
+    </div>
+  </div>
+</section>
 
-    <section class="contact" id="contato">
-        <div class="contact-grid">
-            <div>
-                <span class="tag">Fale Conosco</span>
-                <h2 class="sec-title">Entre em<br>contato agora</h2>
-                <p class="sec-desc">Atendemos empresas de todos os portes. Fale pelo WhatsApp, nos siga no Instagram ou
-                    visite nossa loja em Aparecida de Goiânia.</p>
-                <div class="contact-items">
-                    <a href="https://wa.me/5562996343548" target="_blank" class="citem">
-                        <div class="citem-icon">💬</div>
-                        <div>
-                            <div class="citem-lbl">WhatsApp</div>
-                            <div class="citem-val">(62) 99634-3548</div>
-                        </div>
-                    </a>
-                    <a href="tel:+5562996343548" class="citem">
-                        <div class="citem-icon">📞</div>
-                        <div>
-                            <div class="citem-lbl">Telefone</div>
-                            <div class="citem-val">(62) 99634-3548</div>
-                        </div>
-                    </a>
-                    <a href="https://www.instagram.com/mvcordas" target="_blank" class="citem">
-                        <div class="citem-icon">📸</div>
-                        <div>
-                            <div class="citem-lbl">Instagram</div>
-                            <div class="citem-val">@mvcordas</div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div>
-                <div class="map-card">
-                    <iframe
-                        src="https://maps.google.com/maps?q=Avenida+Dona+Nequita,+Jardim+Ipiranga,+Aparecida+de+Goiania,+GO,+74968-130&output=embed"
-                        allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                    <div class="addr-box">
-                        <div class="addr-lbl">📍 Endereço</div>
-                        <p class="addr-txt">Av. Dona Nequita, Q 02 LT 03 S/N — Jardim Ipiranga<br>Aparecida de Goiânia –
-                            GO · CEP 74968-130</p>
-                    </div>
-                </div>
-            </div>
+<section class="why" id="diferenciais">
+  <div class="why-inner">
+    <div class="why-cards">
+      <div class="wcard reveal"><span class="wcard-icon">🏭</span><div class="wcard-title">Direto da Fábrica</div><p class="wcard-text">Sem intermediários. Compre com os melhores preços diretamente da indústria.</p></div>
+      <div class="wcard reveal"><span class="wcard-icon">⚡</span><div class="wcard-title">Entrega Ágil</div><p class="wcard-text">Agilidade no atendimento para que o seu negócio nunca pare por falta de material.</p></div>
+      <div class="wcard reveal"><span class="wcard-icon">💰</span><div class="wcard-title">Preço Competitivo</div><p class="wcard-text">Valores que fazem diferença real no resultado financeiro da sua empresa.</p></div>
+      <div class="wcard reveal"><span class="wcard-icon">📦</span><div class="wcard-title">Estoque Completo</div><p class="wcard-text">Todas as linhas disponíveis para pronta-entrega em Aparecida de Goiânia.</p></div>
+    </div>
+    <div class="why-right">
+      <span class="tag">Por que a MV Cordas</span>
+      <h2 class="sec-title">O parceiro que<br>seu negócio merece</h2>
+      <p class="sec-desc">Somos especialistas em distribuição de cordas para empresas que precisam de qualidade, variedade e preços justos — com o atendimento que você espera.</p>
+      <ul class="checklist">
+        <li><div class="check-dot"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Distribuição B2B com atendimento personalizado</li>
+        <li><div class="check-dot"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Portfólio completo: poliéster, polipropileno, sisal e NR 18</li>
+        <li><div class="check-dot"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Localização estratégica em Aparecida de Goiânia – GO</li>
+        <li><div class="check-dot"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Empresa registrada — CNPJ 54.152.813/0001-26</li>
+        <li><div class="check-dot"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Atendimento direto via WhatsApp e Instagram</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="cta-banner">
+  <div class="cta-inner">
+    <div class="cta-text">
+      <h2>Pronto para fazer seu pedido?</h2>
+      <p>Fale agora e receba seu orçamento em minutos.</p>
+    </div>
+    <a href="https://wa.me/5562996343548" target="_blank" class="btn-white">💬 Solicitar Orçamento no WhatsApp</a>
+  </div>
+</div>
+
+<section class="contact" id="contato">
+  <div class="contact-grid">
+    <div>
+      <span class="tag">Fale Conosco</span>
+      <h2 class="sec-title">Entre em<br>contato agora</h2>
+      <p class="sec-desc">Atendemos empresas de todos os portes. Fale pelo WhatsApp, nos siga no Instagram ou visite nossa loja em Aparecida de Goiânia.</p>
+      <div class="contact-items">
+        <a href="https://wa.me/5562996343548" target="_blank" class="citem">
+          <div class="citem-icon">💬</div>
+          <div><div class="citem-lbl">WhatsApp</div><div class="citem-val">(62) 99634-3548</div></div>
+        </a>
+        <a href="tel:+5562996343548" class="citem">
+          <div class="citem-icon">📞</div>
+          <div><div class="citem-lbl">Telefone</div><div class="citem-val">(62) 99634-3548</div></div>
+        </a>
+        <a href="https://www.instagram.com/mvcordas" target="_blank" class="citem">
+          <div class="citem-icon">📸</div>
+          <div><div class="citem-lbl">Instagram</div><div class="citem-val">@mvcordas</div></div>
+        </a>
+      </div>
+    </div>
+    <div>
+      <div class="map-card">
+        <iframe src="https://maps.google.com/maps?q=Avenida+Dona+Nequita,+Jardim+Ipiranga,+Aparecida+de+Goiania,+GO,+74968-130&output=embed" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <div class="addr-box">
+          <div class="addr-lbl">📍 Endereço</div>
+          <p class="addr-txt">Av. Dona Nequita, Q 02 LT 03 S/N — Jardim Ipiranga<br>Aparecida de Goiânia – GO · CEP 74968-130</p>
         </div>
-    </section>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <footer>
-        <div class="footer-top">
-            <div>
-                <div class="footer-logo">MV <span>Cordas</span></div>
-                <p class="footer-desc">Distribuição direta da indústria para sua empresa com qualidade, agilidade e os
-                    preços que você precisa.</p>
-            </div>
-            <div>
-                <div class="footer-col-title">Links Rápidos</div>
-                <div class="footer-links">
-                    <a href="#produtos">Produtos</a>
-                    <a href="#diferenciais">Diferenciais</a>
-                    <a href="#contato">Contato</a>
-                    <a href="https://www.instagram.com/mvcordas" target="_blank">Instagram</a>
-                </div>
-            </div>
-            <div>
-                <div class="footer-col-title">Redes Sociais</div>
-                <div class="footer-social">
-                    <a href="https://www.instagram.com/mvcordas" target="_blank" class="fsoc">📸</a>
-                    <a href="https://wa.me/5562996343548" target="_blank" class="fsoc">💬</a>
-                </div>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <span>© 2025 MV Cordas LTDA · CNPJ 54.152.813/0001-26</span>
-            <span>Aparecida de Goiânia – GO · (62) 99634-3548</span>
-        </div>
-    </footer>
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">
+        <img src="https://i.ibb.co/F40S382B/logo-removebg-preview.png" alt="MV Cordas" style="height:52px;width:auto;filter:brightness(0) invert(1);opacity:0.9;">
+      </div>
+      <p class="footer-desc">Distribuição direta da indústria para sua empresa com qualidade, agilidade e os preços que você precisa.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Links Rápidos</div>
+      <div class="footer-links">
+        <a href="#produtos">Produtos</a>
+        <a href="#diferenciais">Diferenciais</a>
+        <a href="#contato">Contato</a>
+        <a href="https://www.instagram.com/mvcordas" target="_blank">Instagram</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Redes Sociais</div>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/mvcordas" target="_blank" class="fsoc">📸</a>
+        <a href="https://wa.me/5562996343548" target="_blank" class="fsoc">💬</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 MV Cordas LTDA · CNPJ 54.152.813/0001-26</span>
+    <span>Aparecida de Goiânia – GO · (62) 99634-3548</span>
+  </div>
+</footer>
 
-    <a href="https://wa.me/5562996343548" class="wa-float" target="_blank" title="Falar no WhatsApp">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="30" height="30">
-            <path fill="#fff"
-                d="M4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979C5.032,13.514,13.548,5,24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428c-0.004,10.465-8.522,18.98-18.986,18.98c-0.001,0,0,0,0,0h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303z" />
-            <path fill="#25D366"
-                d="M24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428c-0.004,10.465-8.522,18.98-18.986,18.98h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979C5.032,13.514,13.548,5,24.014,5" />
-            <path fill="#fff" fill-rule="evenodd" clip-rule="evenodd"
-                d="M19.268,16.045c-0.355-0.79-0.729-0.806-1.068-0.82c-0.277-0.012-0.593-0.011-0.909-0.011c-0.316,0-0.83,0.119-1.265,0.594c-0.435,0.475-1.661,1.622-1.661,3.956c0,2.334,1.7,4.59,1.937,4.906c0.237,0.316,3.282,5.259,8.104,7.161c4.007,1.58,4.823,1.266,5.693,1.187c0.87-0.079,2.807-1.147,3.202-2.255c0.395-1.108,0.395-2.057,0.277-2.255c-0.119-0.198-0.435-0.316-0.909-0.554s-2.807-1.385-3.242-1.543c-0.435-0.158-0.751-0.237-1.068,0.238c-0.316,0.474-1.225,1.543-1.502,1.859c-0.277,0.317-0.554,0.357-1.028,0.119c-0.474-0.238-2.002-0.738-3.815-2.354c-1.41-1.257-2.362-2.81-2.639-3.285c-0.277-0.474-0.03-0.731,0.208-0.968c0.213-0.213,0.474-0.554,0.712-0.831c0.237-0.277,0.316-0.475,0.474-0.791c0.158-0.317,0.079-0.594-0.04-0.831C20.612,19.329,19.69,16.983,19.268,16.045z" />
-        </svg>
-    </a>
+<a href="https://wa.me/5562996343548" class="wa-float" target="_blank" title="Falar no WhatsApp">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="30" height="30">
+    <path fill="#fff" d="M4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979C5.032,13.514,13.548,5,24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428c-0.004,10.465-8.522,18.98-18.986,18.98c-0.001,0,0,0,0,0h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303z"/>
+    <path fill="#25D366" d="M24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428c-0.004,10.465-8.522,18.98-18.986,18.98h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979C5.032,13.514,13.548,5,24.014,5"/>
+    <path fill="#fff" fill-rule="evenodd" clip-rule="evenodd" d="M19.268,16.045c-0.355-0.79-0.729-0.806-1.068-0.82c-0.277-0.012-0.593-0.011-0.909-0.011c-0.316,0-0.83,0.119-1.265,0.594c-0.435,0.475-1.661,1.622-1.661,3.956c0,2.334,1.7,4.59,1.937,4.906c0.237,0.316,3.282,5.259,8.104,7.161c4.007,1.58,4.823,1.266,5.693,1.187c0.87-0.079,2.807-1.147,3.202-2.255c0.395-1.108,0.395-2.057,0.277-2.255c-0.119-0.198-0.435-0.316-0.909-0.554s-2.807-1.385-3.242-1.543c-0.435-0.158-0.751-0.237-1.068,0.238c-0.316,0.474-1.225,1.543-1.502,1.859c-0.277,0.317-0.554,0.357-1.028,0.119c-0.474-0.238-2.002-0.738-3.815-2.354c-1.41-1.257-2.362-2.81-2.639-3.285c-0.277-0.474-0.03-0.731,0.208-0.968c0.213-0.213,0.474-0.554,0.712-0.831c0.237-0.277,0.316-0.475,0.474-0.791c0.158-0.317,0.079-0.594-0.04-0.831C20.612,19.329,19.69,16.983,19.268,16.045z"/>
+  </svg>
+</a>
 
-    <script>
-        const obs = new IntersectionObserver(entries => {
-            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); });
-        }, { threshold: 0.12 });
-        document.querySelectorAll('.reveal').forEach((el, i) => {
-            el.style.transitionDelay = `${(i % 4) * 0.1}s`;
-            obs.observe(el);
-        });
-    </script>
+<script>
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('on'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach((el, i) => {
+    el.style.transitionDelay = `${(i % 4) * 0.1}s`;
+    obs.observe(el);
+  });
+</script>
 </body>
-
 </html>
